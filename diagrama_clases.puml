@@ -1,0 +1,63 @@
+@startuml
+class Jugador {
+    - nombre: String
+    - edad: int
+    - goles: int
+    - equipo: Equipo
+    + getNombre(): String
+    + getEdad(): int
+    + getGoles(): int
+    + getEquipo(): Equipo
+    + setEquipo(Equipo)
+    + agregarGoles(int)
+    + esTitular(): boolean
+}
+
+class Titular extends Jugador {
+    - minutosJugados: int
+    + getMinutosJugados(): int
+    + agregarMinutos(int)
+    + esTitular(): boolean
+}
+
+class Suplente extends Jugador {
+    - partidosIngresados: int
+    - minutosJugados: int
+    + getPartidosIngresados(): int
+    + incrementarPartidosIngresados()
+    + getMinutosJugados(): int
+    + agregarMinutos(int)
+    + esTitular(): boolean
+}
+
+class Equipo {
+    - nombre: String
+    - jugadores: List<Jugador>
+    + getNombre(): String
+    + getJugadores(): List<Jugador>
+    + agregarJugador(Jugador)
+    + eliminarJugador(Jugador)
+    + buscarJugador(String): Jugador
+    + getTotalGoles(): int
+    + getTitularMasMinutos(): Titular
+    + getSuplentesSinIngresar(): List<Suplente>
+}
+
+class Partido {
+    - equipoLocal: Equipo
+    - equipoVisitante: Equipo
+    - golesPorJugador: Map<Jugador, Integer>
+    + getEquipoLocal(): Equipo
+    + getEquipoVisitante(): Equipo
+    + registrarGol(Jugador, int)
+    + getGolesPorJugador(): Map<Jugador, Integer>
+    + getGolesPorEquipo(): Map<Equipo, Integer>
+    + getGoleadores(): List<Jugador>
+}
+
+Equipo "1" o-- "*" Jugador
+Partido "1" o-- "1" Equipo : equipoLocal
+Partido "1" o-- "1" Equipo : equipoVisitante
+
+
+@enduml

@@ -4,9 +4,9 @@ import com.claudio.ligachad.modelo.Equipo;
 import com.claudio.ligachad.modelo.Jugador;
 import com.claudio.ligachad.modelo.Titular;
 
-
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class UtilExportadorCSV {
 
@@ -24,5 +24,32 @@ public class UtilExportadorCSV {
             e.printStackTrace();
         }
     }
-}
 
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static int leerEntero(String mensaje) {
+        System.out.print(mensaje);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Por favor, ingresa un número válido.");
+            scanner.next();
+        }
+        int valor = scanner.nextInt();
+        scanner.nextLine(); // Limpiar buffer
+        return valor;
+    }
+
+    public static boolean leerBooleano(String mensaje) {
+        System.out.print(mensaje + " (s/n): ");
+        String respuesta = scanner.nextLine().trim().toLowerCase();
+        while (!respuesta.equals("s") && !respuesta.equals("n")) {
+            System.out.print("Por favor, responde 's' o 'n': ");
+            respuesta = scanner.nextLine().trim().toLowerCase();
+        }
+        return respuesta.equals("s");
+    }
+
+    public static String leerTexto(String mensaje) {
+        System.out.print(mensaje);
+        return scanner.nextLine();
+    }
+}

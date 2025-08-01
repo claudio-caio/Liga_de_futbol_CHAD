@@ -1,25 +1,23 @@
-package com.claudio.ligachad.servicios;
+package com.claudio.ligachad.servicios.gestion.impl;
 
 import com.claudio.ligachad.modelo.Jugador;
 import com.claudio.ligachad.modelo.Titular;
 import com.claudio.ligachad.modelo.Suplente;
-import java.util.ArrayList;
-import java.util.List;
+import com.claudio.ligachad.servicios.gestion.ServicioJugador;
 import com.claudio.ligachad.util.Validador;
 
-
-
-
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
-
-public class ServicioJugador {
+public class ServicioJugadorImpl implements ServicioJugador {
     private List<Jugador> jugadores;
 
-    public ServicioJugador() {
+    public ServicioJugadorImpl() {
         this.jugadores = new ArrayList<>();
     }
 
+    @Override
     public void registrarJugador(Jugador jugador) {
         if (Validador.validarNombre(jugador.getNombre()) && Validador.validarEdad(jugador.getEdad())) {
             jugadores.add(jugador);
@@ -29,10 +27,12 @@ public class ServicioJugador {
         }
     }
 
+    @Override
     public List<Jugador> listarJugadores() {
         return jugadores;
     }
 
+    @Override
     public Jugador buscarJugador(String nombre) {
         for (Jugador jugador : jugadores) {
             if (jugador.getNombre().equalsIgnoreCase(nombre)) {
@@ -42,12 +42,14 @@ public class ServicioJugador {
         return null;
     }
 
+    @Override
     public Jugador mostrarGoleadorLiga() {
         return jugadores.stream()
                 .max(Comparator.comparingInt(Jugador::getGoles))
                 .orElse(null);
     }
 
+    @Override
     public List<Suplente> mostrarSuplentesNoIngresados() {
         List<Suplente> sinIngresar = new ArrayList<>();
         for (Jugador j : jugadores) {
@@ -61,6 +63,7 @@ public class ServicioJugador {
         return sinIngresar;
     }
 
+    @Override
     public Titular mostrarTitularMasMinutos() {
         Titular titularMax = null;
         int maxMinutos = -1;
